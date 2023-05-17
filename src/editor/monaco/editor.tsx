@@ -41,7 +41,6 @@ const initRange: MonacoEditor.IRange = {
   endColumn: 0,
 };
 
-const initWidth = 500;
 const initHeight = 200;
 
 /**
@@ -69,13 +68,31 @@ export default class BaseEditor extends React.Component<EditorProps, EditorState
   }
 
   componentDidMount() {
-    const { monacoWillMount = () => {}, cdnConfig } = this.props;
+    const { monacoWillMount = () => {}, editorDidMount = () => {}, cdnConfig } = this.props;
     monacoLoader.init(cdnConfig).then((monaco) => {
       this.monaco = monaco;
       if (isFunc(monacoWillMount)) {
         monacoWillMount(monaco);
       }
+
       this.createEditor();
+
+      // ready
+      this.setState({
+        ready: true,
+      });
+
+      // onDidmount
+      if (isFunc(editorDidMount)) {
+        editorDidMount(this.editor, this.monaco);
+      }
+
+      // onChange
+      this.editor?.onDidChangeModelContent(
+        debounce(() => {
+          this.onChange();
+        }, 50),
+      );
     });
   }
 
@@ -86,15 +103,7 @@ export default class BaseEditor extends React.Component<EditorProps, EditorState
       this.createEditor();
     }
 
-    const {
-      width = initWidth,
-      height = initHeight,
-      value = "",
-      language,
-      theme,
-      options = {},
-      onChange,
-    } = this.props;
+    const { width, height = initHeight, value = "", language, theme, options = {} } = this.props;
 
     // value
     if (this.editor && value !== prevProps.value) {
@@ -140,14 +149,6 @@ export default class BaseEditor extends React.Component<EditorProps, EditorState
     if (this.editor && options !== prevProps.options) {
       this.editor.updateOptions(options);
     }
-
-    if (isFunc(onChange)) {
-      this.editor?.onDidChangeModelContent(
-        debounce(() => {
-          this.onChange();
-        }, 50),
-      );
-    }
   }
 
   componentWillUnmount() {
@@ -167,15 +168,7 @@ export default class BaseEditor extends React.Component<EditorProps, EditorState
       return;
     }
 
-    const {
-      width = initWidth,
-      height = initHeight,
-      value,
-      language,
-      options,
-      theme = "vs",
-      editorDidMount = () => {},
-    } = this.props;
+    const { width, height = initHeight, value, language, options, theme = "vs" } = this.props;
 
     // init
     const model = this.monaco.editor.createModel(value, language);
@@ -198,16 +191,6 @@ export default class BaseEditor extends React.Component<EditorProps, EditorState
       _this.monaco.editor.defineTheme(t, themes[t]);
     });
     this.monaco.editor.setTheme(theme);
-
-    // ready
-    this.setState({
-      ready: true,
-    });
-
-    // didmount
-    if (isFunc(editorDidMount)) {
-      editorDidMount(this.editor, this.monaco);
-    }
   }
 
   onChange() {
@@ -250,7 +233,7 @@ export default class BaseEditor extends React.Component<EditorProps, EditorState
         isFullScreen: false,
       });
       this.editor?.layout({
-        width: width || initWidth,
+        width: width || 0,
         height: height || initHeight,
       });
       document.body.classList.remove("monaco-fullScreen");
@@ -259,7 +242,7 @@ export default class BaseEditor extends React.Component<EditorProps, EditorState
 
   render() {
     const {
-      width = initWidth,
+      width,
       height = initHeight,
       className,
       bordered = true,

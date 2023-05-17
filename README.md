@@ -66,6 +66,7 @@ export default class CodeDiffEditor extends React.PureComponent {
 | theme | string | vs | vs, vs-dark, active4d, clouds, chrome, monokai, solarized-dark, solarized-light |
 | options | object | null | [IEditorOptions](https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html) |
 | bordered | boolean | true | need bordered ? |
+| className | string | null | wrapper class name |
 | onChange | func | (value) => void | triggered when the editor value changes |
 | monacoWillMount | func | (monaco) => void | triggered when the monaco will mounted |
 | editorDidMount | func | (editor, monaco) => void | triggered when the editor did mounted |
@@ -85,6 +86,7 @@ export default class CodeDiffEditor extends React.PureComponent {
 | modifiedLanguage | string | null | diff editor modified language |
 | theme | string | vs | vs, vs-dark, active4d, clouds, chrome, monokai, solarized-dark, solarized-light |
 | options | object | null | [IDiffEditorOptions](https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.idiffeditorconstructionoptions.html) |
+| className | string | null | wrapper class name |
 | monacoWillMount | func | (monaco) => void | triggered when the monaco will mounted |
 | editorDidMount | func | (original: MonacoEditor.editor.ITextModel, modified: MonacoEditor.editor.ITextModel, editor: MonacoEditor.editor) => void | triggered when the diff editor did mounted |
 | onChange | (value: string) => void | null | modified model content change |

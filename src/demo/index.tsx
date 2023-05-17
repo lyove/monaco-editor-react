@@ -46,10 +46,30 @@ export default class Demo extends React.PureComponent<BaseProps, BaseState> {
   render() {
     const { theme, language, width, height } = this.state;
     return (
-      <div className="monaco-editor-examples">
-        <h1>Monaco Editor example</h1>
+      <>
+        <nav className="header">
+          <span className="nav-item">
+            <a href="/">Home</a>
+          </span>
+          <span>
+            <a href="https://github.com/lyove/monaco-editor-react/blob/master/README.md">
+              Documentation
+            </a>
+          </span>
+          <span className="nav-item">
+            <a href="https://github.com/lyove/monaco-editor-react">Github</a>
+          </span>
+        </nav>
+
+        <div className="feature">
+          <h1>MonacoEditor react</h1>
+          <div className="desc">
+            React component for MonacoEditor without needing to use webpack plugins
+          </div>
+        </div>
+
         <div className="base-editor">
-          <h2>base example</h2>
+          <h2>Base example</h2>
           <div className="label-box">
             <label>
               Language:
@@ -73,31 +93,58 @@ export default class Demo extends React.PureComponent<BaseProps, BaseState> {
             </label>
           </div>
           <MonacoEditor
-            width={width}
+            // width={width}
             height={height}
             language={language}
             value={examples[language]}
             theme={theme}
             supportFullScreen={true}
+            options={{
+              fontSize: 13,
+              fontFamily: 'Menlo, Monaco, "Courier New", monospace',
+              minimap: {
+                enabled: true,
+              },
+              formatOnPaste: true,
+              scrollbar: {
+                useShadows: false,
+                verticalScrollbarSize: 10,
+                horizontalScrollbarSize: 10,
+              },
+            }}
+            monacoWillMount={(monaco) => {
+              console.log("monaco：", monaco);
+            }}
+            editorDidMount={(editor, monaco) => {
+              console.log("editor：", editor);
+            }}
             onChange={(value: string | null) => {
-              console.log("editor value: ", value);
+              console.log("editor value:===========================\n", value);
             }}
             // cdnConfig={{
             //   monacoPath: "https://g.alicdn.com/code/lib/monaco-editor/0.36.1/min/vs",
             // }}
           />
         </div>
+
         <div className="diff-editor">
-          <h2>diff example</h2>
+          <h2>Diff example</h2>
           <DiffEditor
-            width={1000}
+            // width={1000}
             height={400}
             original={diffExamples.original}
             modified={diffExamples.modified}
             language="markdown"
+            options={{
+              scrollbar: {
+                useShadows: false,
+                verticalScrollbarSize: 10,
+                horizontalScrollbarSize: 10,
+              },
+            }}
           />
         </div>
-      </div>
+      </>
     );
   }
 }
