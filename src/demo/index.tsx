@@ -62,7 +62,7 @@ export default class Demo extends React.PureComponent<BaseProps, BaseState> {
         </nav>
 
         <div className="feature">
-          <h1>MonacoEditor react</h1>
+          <h1>Monaco-Editor-React</h1>
           <div className="desc">
             React component for MonacoEditor without needing to use webpack plugins
           </div>
