@@ -1,4 +1,4 @@
-const packageName = "monaco-editor-react";
+const packageName = "monaco-editor-for-react";
 
 const config = {
   entries: [

@@ -199,7 +199,7 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
     const { ready } = this.state;
     const { width, height, className, bordered = true } = this.props;
 
-    const wrapperClass = classNames("monaco-editor-react", "diff", className, {
+    const wrapperClass = classNames("monaco-editor-for-react", "diff", className, {
       "no-border": !bordered,
     });
 

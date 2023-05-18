@@ -250,7 +250,7 @@ export default class BaseEditor extends React.Component<EditorProps, EditorState
     } = this.props;
     const { ready, isFullScreen } = this.state;
 
-    const wrapperClass = classNames("monaco-editor-react", className, {
+    const wrapperClass = classNames("monaco-editor-for-react", className, {
       fullscreen: isFullScreen,
       "no-border": !bordered,
     });
