@@ -1,4 +1,4 @@
-<h1 align='center'> React Monaco-Editor-React⚡</h1>
+<h1 align='center'> 💯 React Monaco-Editor-React⚡</h1>
 
 Monaco Code Editor for React, without need of configuration files or plugins
 
