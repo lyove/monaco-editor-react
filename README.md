@@ -1,4 +1,4 @@
-<h1 align='center'>Monaco-editor-react⚡</h1>
+<h1 align='center'>Monaco-Editor-React⚡</h1>
 
 Monaco editor wrapper for easy/one-line integration with React.
 
