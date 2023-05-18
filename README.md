@@ -1,4 +1,4 @@
-<h1 align='center'>Monaco-Editor-React⚡</h1>
+<h1 align='center'> React Monaco-Editor-React⚡</h1>
 
 Monaco Code Editor for React, without need of configuration files or plugins
 
@@ -6,7 +6,7 @@ Monaco Code Editor for React, without need of configuration files or plugins
 
 ## 💎 **Using**
 
-### ⭐️ BaseEditor
+### 🛠 BaseEditor
 
 ```javascript
 import React from "react";
@@ -34,7 +34,7 @@ export default class CodeEditor extends React.PureComponent {
 }
 ```
 
-### ⭐️ DiffEditor
+### 🛠 DiffEditor
 
 ```javascript
 import React from "react";
