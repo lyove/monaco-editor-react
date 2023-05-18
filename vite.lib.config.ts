@@ -21,7 +21,7 @@ const getPackageNameCamelCase = () => {
   }
 };
 
-const info = `/**
+const pkgInfo = `/**
  * name: ${pkg.name}
  * version: ${pkg.version}
  * description: ${pkg.description}
@@ -46,7 +46,7 @@ module.exports = defineConfig({
     emptyOutDir: true,
     assetsDir: "assets",
   },
-  plugins: [react({}), banner(info)],
+  plugins: [react({}), banner(pkgInfo)],
   resolve: {
     alias: {
       "@/*": path.resolve(__dirname, "src"),
