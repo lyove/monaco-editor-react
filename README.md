@@ -2,7 +2,7 @@
 
 Monaco editor wrapper for easy/one-line integration with React.
 
-[Monaco-Editor-React Demo](https://monaco-editor-react.netlify.app/)
+[https://monaco-editor-react.netlify.app](https://monaco-editor-react.netlify.app/)
 
 ## **Using 📦**
 
