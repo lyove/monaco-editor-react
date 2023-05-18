@@ -3,7 +3,14 @@ import classNames from "classnames";
 import { debounce } from "lodash";
 import * as MonacoEditor from "monaco-editor";
 import monacoLoader from "./loader";
-import { initOptions, themes } from "../config";
+import {
+  wrapperClassName,
+  containerClassName,
+  initHeight,
+  loadingText,
+  initOptions,
+  themes,
+} from "../config";
 import { isFunc } from "../utils";
 import type { Config } from "./loader";
 
@@ -26,6 +33,7 @@ export interface DiffProps {
     original: MonacoEditor.editor.ITextModel,
     modified: MonacoEditor.editor.ITextModel,
     editor: MonacoEditor.editor.IStandaloneDiffEditor,
+    monaco: any,
   ) => void;
   onChange?: (value: string) => void;
   cdnConfig?: Config;
@@ -33,7 +41,6 @@ export interface DiffProps {
 
 interface DiffState {
   ready: boolean;
-  monacoDidMount: boolean;
 }
 
 /**
@@ -50,7 +57,6 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
 
     this.state = {
       ready: false,
-      monacoDidMount: false,
     };
 
     this.container = null;
@@ -62,24 +68,44 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
   }
 
   componentDidMount() {
-    const { monacoWillMount = () => {}, cdnConfig } = this.props;
-    monacoLoader.init(cdnConfig).then((m) => {
+    const {
+      monacoWillMount = () => {},
+      editorDidMount = () => {},
+      onChange = () => {},
+      cdnConfig,
+    } = this.props;
+
+    monacoLoader.init(cdnConfig).then((monaco) => {
+      this.monaco = monaco;
+
+      // onWillMount
       if (isFunc(monacoWillMount)) {
-        monacoWillMount(m);
+        monacoWillMount(monaco);
       }
-      this.monaco = m;
-      this.setState({
-        monacoDidMount: true,
-      });
+
+      // react editor
+      this.createEditor();
+
+      const { original, modified } = this.editor.getModel();
+
+      // onDidmount
+      if (isFunc(editorDidMount)) {
+        editorDidMount(original, modified, this.editor, this.monaco);
+      }
+
+      // onChange
+      if (isFunc(onChange)) {
+        modified.onDidChangeContent(
+          debounce(() => {
+            onChange(modified.getValue());
+          }, 32),
+        );
+      }
     });
   }
 
-  componentDidUpdate(prevProps: DiffProps) {
-    const { ready, monacoDidMount } = this.state;
-
-    if (!monacoDidMount) {
-      return;
-    }
+  componentDidUpdate(prevProps: DiffProps, preState: DiffState) {
+    const { ready } = this.state;
 
     if (!ready) {
       this.createEditor();
@@ -93,32 +119,33 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
       language,
       theme,
       options,
-      height,
       width,
+      height,
     } = this.props;
 
+    // layout
     if (prevProps.width !== width || prevProps.height !== height) {
-      this.editor.layout({ width, height });
+      this.editor.layout({
+        width,
+        height,
+      });
     }
 
-    // original
+    // original, modified
     if (prevProps.original !== original) {
       this.editor.getModel().original.setValue(original);
     }
-
-    // modified
     if (prevProps.modified !== modified) {
       this.editor.getModel().modified.setValue(modified);
     }
 
-    // originalLanguage、modifiedLanguage、language
+    // originalLanguage, modifiedLanguage, language
     if (
       prevProps.originalLanguage !== originalLanguage ||
       prevProps.modifiedLanguage !== modifiedLanguage ||
       prevProps.language !== language
     ) {
       const { original: or, modified: mo } = this.editor.getModel();
-
       this.monaco.editor.setModelLanguage(or, originalLanguage || language);
       this.monaco.editor.setModelLanguage(mo, modifiedLanguage || language);
     }
@@ -145,72 +172,74 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
   }
 
   createEditor() {
-    const { editorDidMount = () => {}, theme, options, width, height, onChange } = this.props;
     if (!this.monaco || !this.container) {
       return;
     }
 
-    this.editor = this.monaco.editor.createDiffEditor(this.container, {
+    const wrapper = document.querySelector(`.${wrapperClassName}`) as HTMLElement;
+
+    const {
+      width = wrapper.offsetWidth,
+      height = initHeight,
+      original,
+      modified,
+      originalLanguage,
+      modifiedLanguage,
+      language,
+      theme,
+      options,
+    } = this.props;
+
+    // init
+    const { createDiffEditor } = this.monaco.editor;
+    this.editor = createDiffEditor(this.container, {
       ...initOptions,
       ...options,
     });
 
-    this.setModels();
-
-    const { original, modified } = this.editor.getModel();
-
-    if (isFunc(editorDidMount)) {
-      editorDidMount(original, modified, this.editor);
-    }
-
-    if (onChange && isFunc(onChange)) {
-      modified.onDidChangeContent(
-        debounce(() => {
-          onChange(modified.getValue());
-        }, 32),
-      );
-    }
-
-    Object.keys(themes).forEach((v) => {
-      this.monaco.editor.defineTheme(v, themes[v]);
-    });
-
-    this.monaco.editor.setTheme(theme);
-
-    this.editor.layout({ width, height });
-
-    this.setState({ ready: true });
-  }
-
-  setModels() {
-    const { original, modified, originalLanguage, modifiedLanguage, language } = this.props;
-
+    // model
     const originalModel = this.monaco.editor.createModel(original, originalLanguage || language);
-
     const modifiedModel = this.monaco.editor.createModel(modified, modifiedLanguage || language);
-
     this.editor.setModel({
       original: originalModel,
       modified: modifiedModel,
+    });
+
+    // layout
+    this.editor.layout({
+      width,
+      height,
+    });
+
+    // theme
+    Object.keys(themes).forEach((v) => {
+      this.monaco.editor.defineTheme(v, themes[v]);
+    });
+    this.monaco.editor.setTheme(theme);
+
+    // ready
+    this.setState({
+      ready: true,
     });
   }
 
   render() {
     const { ready } = this.state;
-    const { width, height, className, bordered = true } = this.props;
+    const { width, height = initHeight, className, bordered = true } = this.props;
 
-    const wrapperClass = classNames("monaco-editor-react", "diff", className, {
+    const wrapperClass = classNames(wrapperClassName, "diff", className, {
       "no-border": !bordered,
     });
 
+    const style = {
+      ...(width && !isNaN(width) ? { width: `${width}px` } : { width: "100%" }),
+      height: `${height}px`,
+    };
+
     return (
-      <div className={wrapperClass} style={{ width, height }}>
-        {!ready && <span className="loading">Loading</span>}
-        <div
-          ref={this.bindRef}
-          className="editor-container"
-          style={{ height, flex: 1, display: ready ? "block" : "none" }}
-        />
+      <div className={wrapperClass} style={style}>
+        {!ready && <span className="loading">{loadingText}</span>}
+        <div ref={this.bindRef} className={containerClassName} style={style} />
       </div>
     );
   }

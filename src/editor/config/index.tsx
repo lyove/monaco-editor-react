@@ -1,6 +1,20 @@
 // monaco cdn path
 export const monacoPath = "https://unpkg.com/monaco-editor@0.38.0/min/vs";
 
+// locale
+export const locale = navigator.language.toLowerCase().indexOf("zh") > -1 ? "zh-CN" : "en";
+
+// loading text
+export const loadingText = locale === "zh-CN" ? "初始化中" : "Initializing";
+
+// wrapper class name
+export const wrapperClassName = "monaco-editor-react";
+export const containerClassName = "editor-container";
+
+// default height
+export const initHeight = 300;
+
+// default options
 export const initOptions = {
   fontSize: 13,
   tabSize: 2,
@@ -2715,6 +2729,7 @@ export const themeNames: themeType = [
   "solarized-light",
 ];
 
+// icons
 export const icons = {
   max: (
     <svg viewBox="64 64 896 896" width="1rem" height="1rem" fill="currentColor">

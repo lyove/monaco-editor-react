@@ -105,6 +105,7 @@ export default class Demo extends React.PureComponent<BaseProps, BaseState> {
               minimap: {
                 enabled: true,
               },
+              automaticLayout: true,
               formatOnPaste: true,
               scrollbar: {
                 useShadows: false,
@@ -130,7 +131,7 @@ export default class Demo extends React.PureComponent<BaseProps, BaseState> {
         <div className="diff-editor">
           <h2>Diff example</h2>
           <MonacoDiffEditor
-            // width={1000}
+            // width={600}
             height={400}
             original={diffExamples.original}
             modified={diffExamples.modified}

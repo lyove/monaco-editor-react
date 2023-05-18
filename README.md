@@ -71,7 +71,7 @@ export default class CodeDiffEditor extends React.PureComponent {
 | className | string | null | wrapper class name |
 | onChange | func | (value) => void | triggered when the editor value changes |
 | monacoWillMount | func | (monaco) => void | triggered when the monaco will mounted |
-| editorDidMount | func | (editor, monaco) => void | triggered when the editor did mounted |
+| editorDidMount | func | (editor: MonacoEditor.editor, monaco: any) => void | triggered when the editor did mounted |
 | cdnConfig | { monacoPath: string } | { monacoPath: "https://unpkg.com/monaco-editor@0.38.0/min/vs" } | custom cdn path, notice: `monacoPath` such as: "`https://your-custom-cdn-path/monaco-editor@version/min/vs`", the end of the path can only be "`/monaco-editor@version/min/vs`", no need for "`/xxx.js`" |
 
 
@@ -90,7 +90,7 @@ export default class CodeDiffEditor extends React.PureComponent {
 | options | object | null | [IDiffEditorOptions](https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.idiffeditorconstructionoptions.html) |
 | className | string | null | wrapper class name |
 | monacoWillMount | func | (monaco) => void | triggered when the monaco will mounted |
-| editorDidMount | func | (original: MonacoEditor.editor.ITextModel, modified: MonacoEditor.editor.ITextModel, editor: MonacoEditor.editor) => void | triggered when the diff editor did mounted |
+| editorDidMount | func | (original: MonacoEditor.editor.ITextModel, modified: MonacoEditor.editor.ITextModel, editor: MonacoEditor.editor, monaco: any) => void | triggered when the diff editor did mounted |
 | onChange | (value: string) => void | null | modified model content change |
 | cdnConfig | { monacoPath: string } | { monacoPath: "https://unpkg.com/monaco-editor@0.38.0/min/vs" } | custom cdn path, notice: `monacoPath` such as: "`https://your-custom-cdn-path/monaco-editor@version/min/vs`", the end of the path can only be "`/monaco-editor@version/min/vs`", no need for "`/xxx.js`" |
 

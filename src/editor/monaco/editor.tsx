@@ -5,7 +5,15 @@ import classNames from "classnames";
 import * as MonacoEditor from "monaco-editor";
 import { debounce } from "lodash";
 import monacoLoader from "./loader";
-import { initOptions, themes, icons } from "../config";
+import {
+  wrapperClassName,
+  containerClassName,
+  initHeight,
+  loadingText,
+  initOptions,
+  themes,
+  icons,
+} from "../config";
 import { isFunc, isNumber } from "../utils";
 import type { Config } from "./loader";
 import "../style/index.less";
@@ -41,7 +49,8 @@ const initRange: MonacoEditor.IRange = {
   endColumn: 0,
 };
 
-const initHeight = 200;
+const fullScreenWidth = window.innerWidth || document.documentElement.offsetWidth;
+const fullScreenHeight = window.innerHeight || document.documentElement.offsetHeight;
 
 /**
  * Editor
@@ -50,6 +59,7 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
   private container: HTMLDivElement | null;
   public monaco: any;
   public editor?: MonacoEditor.editor.IStandaloneCodeEditor;
+  private originalLayout: { width: number; height: number };
   static displayName = "MonacoEditor";
 
   constructor(props: EditorProps) {
@@ -62,25 +72,32 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
     this.container = null;
     this.editor = undefined;
 
+    this.originalLayout = {
+      width: 0,
+      height: 0,
+    };
+
     this.bindRef = this.bindRef.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.handleFullScreen = this.handleFullScreen.bind(this);
   }
 
   componentDidMount() {
-    const { monacoWillMount = () => {}, editorDidMount = () => {}, cdnConfig } = this.props;
+    const {
+      monacoWillMount = () => {},
+      editorDidMount = () => {},
+      onChange = () => {},
+      cdnConfig,
+    } = this.props;
     monacoLoader.init(cdnConfig).then((monaco) => {
       this.monaco = monaco;
+
+      // onWillMount
       if (isFunc(monacoWillMount)) {
         monacoWillMount(monaco);
       }
 
+      // create editor
       this.createEditor();
-
-      // ready
-      this.setState({
-        ready: true,
-      });
 
       // onDidmount
       if (isFunc(editorDidMount)) {
@@ -90,20 +107,37 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       // onChange
       this.editor?.onDidChangeModelContent(
         debounce(() => {
-          this.onChange();
+          onChange(this.editor?.getValue() || null);
         }, 50),
       );
+
+      // resize
+      window.addEventListener("resize", this.resizeEditorHeight);
     });
   }
 
-  componentDidUpdate(prevProps: EditorProps) {
-    const { ready } = this.state;
+  componentDidUpdate(prevProps: EditorProps, preState: EditorState) {
+    const { ready, isFullScreen } = this.state;
 
     if (!ready) {
       this.createEditor();
     }
 
-    const { width, height = initHeight, value = "", language, theme, options = {} } = this.props;
+    const { width, height, value = "", language, theme, options = {} } = this.props;
+
+    // with or height
+    if (
+      this.editor &&
+      (prevProps.width !== width ||
+        prevProps.height !== height ||
+        preState.isFullScreen !== isFullScreen)
+    ) {
+      const wrapper = document.querySelector(`.${wrapperClassName}`) as HTMLElement;
+      this.editor.layout({
+        width: isFullScreen ? fullScreenWidth : width || wrapper.offsetWidth,
+        height: isFullScreen ? fullScreenHeight : height || wrapper.offsetHeight,
+      });
+    }
 
     // value
     if (this.editor && value !== prevProps.value) {
@@ -127,19 +161,6 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       this.monaco.editor.setModelLanguage(this.editor.getModel(), language);
     }
 
-    // with or height
-    if (
-      this.editor &&
-      (prevProps.width !== width || prevProps.height !== height) &&
-      isNumber(width) &&
-      isNumber(height)
-    ) {
-      this.editor.layout({
-        width: this.calc(width),
-        height: this.calc(height),
-      });
-    }
-
     // theme
     if (theme !== prevProps.theme) {
       this.monaco.editor.setTheme(theme);
@@ -154,6 +175,7 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
   componentWillUnmount() {
     if (this.editor) {
       this.editor.dispose();
+      window.removeEventListener("resize", this.resizeEditorHeight);
     }
   }
 
@@ -168,7 +190,16 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       return;
     }
 
-    const { width, height = initHeight, value, language, options, theme = "vs" } = this.props;
+    const wrapper = document.querySelector(`.${wrapperClassName}`) as HTMLElement;
+
+    const {
+      width = wrapper.offsetWidth,
+      height = initHeight,
+      value,
+      language,
+      options,
+      theme = "vs",
+    } = this.props;
 
     // init
     const model = this.monaco.editor.createModel(value, language);
@@ -178,11 +209,11 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       ...options,
     });
 
-    // with or height
+    // layout
     if (isNumber(width) || isNumber(height)) {
       this.editor?.layout({
-        width: this.calc(width),
-        height: this.calc(height),
+        width,
+        height,
       });
     }
 
@@ -191,41 +222,38 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       _this.monaco.editor.defineTheme(t, themes[t]);
     });
     this.monaco.editor.setTheme(theme);
+
+    // ready
+    this.setState({
+      ready: true,
+    });
   }
 
-  onChange() {
-    const { onChange = () => {} } = this.props;
-    if (!this.editor) {
-      return;
+  resizeEditorHeight = () => {
+    const editorElement = this.editor?.getDomNode();
+    if (editorElement) {
+      editorElement.style.height = `${window.innerHeight}px`;
     }
-    const value = this.editor.getValue();
-    onChange(value);
-  }
-
-  calc = (n: number | undefined) => {
-    if (!n) {
-      return 0;
-    }
-    if (typeof n === "string") {
-      return n;
-    }
-    return n - 2;
+    this.editor?.layout();
   };
 
   handleFullScreen = (sizeMode: string) => {
-    const { width, height = initHeight } = this.props;
-
     if (!this.editor) {
       return;
     }
 
     if (sizeMode === "max") {
+      const container = document.querySelector(`.${containerClassName}`) as HTMLElement;
+      this.originalLayout = {
+        width: container.offsetWidth,
+        height: container.offsetHeight,
+      };
       this.setState({
         isFullScreen: true,
       });
       this.editor?.layout({
-        width: window.innerWidth || document.documentElement.offsetWidth,
-        height: window.innerHeight || document.documentElement.offsetHeight,
+        width: fullScreenWidth,
+        height: fullScreenHeight,
       });
       document.body.classList.add("monaco-fullScreen");
     } else if (sizeMode === "min") {
@@ -233,8 +261,8 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
         isFullScreen: false,
       });
       this.editor?.layout({
-        width: width || 0,
-        height: height || initHeight,
+        width: this.originalLayout.width,
+        height: this.originalLayout.height,
       });
       document.body.classList.remove("monaco-fullScreen");
     }
@@ -250,7 +278,7 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
     } = this.props;
     const { ready, isFullScreen } = this.state;
 
-    const wrapperClass = classNames("monaco-editor-react", className, {
+    const wrapperClass = classNames(wrapperClassName, className, {
       fullscreen: isFullScreen,
       "no-border": !bordered,
     });
@@ -260,9 +288,16 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       "full-screen-icon-cancel": isFullScreen,
     });
 
+    const styleWidth = isFullScreen
+      ? `${fullScreenWidth}px`
+      : width && !isNaN(width)
+      ? `${width}px`
+      : undefined;
+    const styleHeight = isFullScreen ? "100vh" : `${height}px`;
+
     return (
-      <div className={wrapperClass} style={{ width, height }}>
-        {!ready && <span className="loading">Loading</span>}
+      <div className={wrapperClass} style={{ width: styleWidth, height: styleHeight }}>
+        {!ready && <span className="loading">{loadingText}</span>}
         {ready && supportFullScreen && (
           <div
             className={fullScreenClass}
@@ -271,15 +306,7 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
             {isFullScreen ? icons.min : icons.max}
           </div>
         )}
-        <div
-          ref={this.bindRef}
-          className="editor-container"
-          style={{
-            height: isFullScreen ? "100%" : height,
-            flex: 1,
-            display: ready ? "block" : "none",
-          }}
-        />
+        <div ref={this.bindRef} className={containerClassName} />
       </div>
     );
   }
