@@ -52,12 +52,12 @@ export default class Demo extends React.PureComponent<BaseProps, BaseState> {
             <a href="/">Home</a>
           </span>
           <span>
-            <a href="https://github.com/lyove/monaco-editor-for-react/blob/master/README.md">
+            <a href="https://github.com/lyove/monaco-editor-react/blob/master/README.md">
               Documentation
             </a>
           </span>
           <span className="nav-item">
-            <a href="https://github.com/lyove/monaco-editor-for-react">Github</a>
+            <a href="https://github.com/lyove/monaco-editor-react">Github</a>
           </span>
         </nav>
 

@@ -4,23 +4,23 @@
   "description": "Monaco editor wrapper for easy/one-line integration with React",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lyove/monaco-editor-for-react"
+    "url": "https://github.com/lyove/monaco-editor-react"
   },
-  "homepage": "https://github.com/lyove/monaco-editor-for-react#readme",
+  "homepage": "https://github.com/lyove/monaco-editor-react#readme",
   "author": "lyove",
   "files": [
     "dist"
   ],
-  "main": "./dist/monaco-editor-for-react.js",
+  "main": "./dist/monaco-editor-react.js",
   "exports": {
     ".": {
-      "import": "./dist/monaco-editor-for-react.js",
-      "require": "./dist/monaco-editor-for-react.cjs"
+      "import": "./dist/monaco-editor-react.js",
+      "require": "./dist/monaco-editor-react.cjs"
     }
   },
   "keywords": [
     "monaco-editor",
-    "monaco-editor-for-react",
+    "monaco-editor-react",
     "react-monaco-editor",
     "code-editor"
   ],

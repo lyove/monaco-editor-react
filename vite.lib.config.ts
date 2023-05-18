@@ -2,7 +2,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-const packageName = "monaco-editor-for-react";
+const packageName = "monaco-editor-react";
 
 const fileNames = {
   es: `${packageName}.js`,
