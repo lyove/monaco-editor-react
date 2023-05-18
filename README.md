@@ -1,6 +1,6 @@
 <h1 align='center'>Monaco-Editor-React⚡</h1>
 
-Monaco editor wrapper for easy/one-line integration with React.
+Monaco Code Editor for React, without need of configuration files or plugins
 
 [https://monaco-editor-react.netlify.app](https://monaco-editor-react.netlify.app/)
 
