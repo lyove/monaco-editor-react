@@ -274,7 +274,11 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
         <div
           ref={this.bindRef}
           className="editor-container"
-          style={{ height, flex: 1, display: ready ? "block" : "none" }}
+          style={{
+            height: isFullScreen ? "100%" : height,
+            flex: 1,
+            display: ready ? "block" : "none",
+          }}
         />
       </div>
     );
