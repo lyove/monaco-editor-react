@@ -57,7 +57,7 @@ export default class CodeDiffEditor extends React.PureComponent {
 ```
 
 
-### 📋 Editor Props
+### 🧩 Editor Props
 
 | Name | Type | Default | Description |
 |:--------------|:-------------|:-------------|:---------------|
@@ -75,7 +75,7 @@ export default class CodeDiffEditor extends React.PureComponent {
 | cdnConfig | { monacoPath: string } | { monacoPath: "https://unpkg.com/monaco-editor@0.38.0/min/vs" } | custom cdn path, notice: `monacoPath` such as: "`https://your-custom-cdn-path/monaco-editor@version/min/vs`", the end of the path can only be "`/monaco-editor@version/min/vs`", no need for "`/xxx.js`" |
 
 
-### 📋 DiffEditor Props
+### 🧩 DiffEditor Props
 
 | Name | Type | Default | Description |
 |:--------------|:-------------|:-------------|:---------------|
