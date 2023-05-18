@@ -1,4 +1,4 @@
-<h1 align='center'>Monaco-editor-react-typeScript⚡</h1>
+<h1 align='center'>Monaco-editor-react⚡</h1>
 
 Monaco editor wrapper for easy/one-line integration with React.
 
@@ -8,7 +8,7 @@ Monaco editor wrapper for easy/one-line integration with React.
 
 ```javascript
 import React from "react";
-import MonacoEditor from "monaco-editor-react";
+import MonacoEditor from "@lyove/monaco-editor-react";
 import examples from "./examples";
 
 export default class CodeEditor extends React.PureComponent {
@@ -36,7 +36,7 @@ export default class CodeEditor extends React.PureComponent {
 
 ```javascript
 import React from "react";
-import { DiffEditor } from "monaco-editor-react";
+import { DiffEditor } from "@lyove/monaco-editor-react";
 import { diffExamples } from "./example";
 
 export default class CodeDiffEditor extends React.PureComponent {
