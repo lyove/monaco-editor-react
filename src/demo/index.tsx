@@ -1,5 +1,5 @@
 import React from "react";
-import MonacoEditor, { DiffEditor } from "../editor";
+import MonacoEditor, { MonacoDiffEditor } from "../editor";
 import { languageOptions, themeOptons } from "./constant";
 import { examples, diffExamples } from "./example";
 import "./style.less";
@@ -129,7 +129,7 @@ export default class Demo extends React.PureComponent<BaseProps, BaseState> {
 
         <div className="diff-editor">
           <h2>Diff example</h2>
-          <DiffEditor
+          <MonacoDiffEditor
             // width={1000}
             height={400}
             original={diffExamples.original}
