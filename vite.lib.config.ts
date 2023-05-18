@@ -1,8 +1,10 @@
 import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import banner from "vite-plugin-banner";
+import pkg from "./package.json";
 
-const packageName = "monaco-editor-react";
+const packageName = "editor";
 
 const fileNames = {
   es: `${packageName}.js`,
@@ -18,6 +20,15 @@ const getPackageNameCamelCase = () => {
     throw new Error("Name property in package.json is missing.");
   }
 };
+
+const info = `/**
+ * name: ${pkg.name}
+ * version: ${pkg.version}
+ * description: ${pkg.description}
+ * author: ${pkg.author}
+ * homepage: ${pkg.homepage}
+ * repository: ${pkg.repository.url}
+ */`;
 
 module.exports = defineConfig({
   base: "./",
@@ -35,7 +46,7 @@ module.exports = defineConfig({
     emptyOutDir: true,
     assetsDir: "assets",
   },
-  plugins: [react({})],
+  plugins: [react({}), banner(info)],
   resolve: {
     alias: {
       "@/*": path.resolve(__dirname, "src"),
