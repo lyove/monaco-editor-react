@@ -44,9 +44,9 @@ const initRange: MonacoEditor.IRange = {
 const initHeight = 200;
 
 /**
- * BaseEditor
+ * Editor
  */
-export default class BaseEditor extends React.Component<EditorProps, EditorState> {
+export default class Editor extends React.Component<EditorProps, EditorState> {
   private container: HTMLDivElement | null;
   public monaco: any;
   public editor?: MonacoEditor.editor.IStandaloneCodeEditor;
