@@ -1,11 +1,11 @@
 import MonacoEditor, { EditorProps } from "./monaco/editor";
-import DiffEditor, { DiffProps } from "./monaco/diff";
+import MonacoDiffEditor, { DiffProps } from "./monaco/diff";
 import { themeNames } from "./config";
 
 export type MonacoEditorProps = EditorProps;
 
 export type MonacoDiffEditorProps = DiffProps;
 
-export { DiffEditor, themeNames };
+export { MonacoDiffEditor, themeNames };
 
 export default MonacoEditor;
