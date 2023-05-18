@@ -11,11 +11,11 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/monaco-editor-react.js",
+  "main": "./dist/editor.js",
   "exports": {
     ".": {
-      "import": "./dist/monaco-editor-react.js",
-      "require": "./dist/monaco-editor-react.cjs"
+      "import": "./dist/editor.js",
+      "require": "./dist/editor.cjs"
     }
   },
   "keywords": [
@@ -31,7 +31,7 @@
   "scripts": {
     "dev": "vite --open",
     "build": "tsc && vite build",
-    "build:lib": "tsc && vite build --config vite.lib.config.ts && dts-bundle-generator --config ./dts-bundle-generator.config.ts",
+    "build:lib": "tsc && vite build --config vite.lib.config.ts && dts-bundle-generator --config ./dts-bundle.ts",
     "serve": "vite preview",
     "eslint": "eslint . --ext .js,.cjs,.ts,.jsx,.tsx, --quiet --fix --ignore-path ./.gitignore",
     "prettier": "prettier --config .prettierrc --write 'src/**/*.{js,jsx,ts,tsx,css,html,json}' ",
@@ -44,7 +44,8 @@
     "lodash": "^4.17.21",
     "monaco-editor": "^0.38.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "vite-plugin-banner": "^0.7.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.194",
