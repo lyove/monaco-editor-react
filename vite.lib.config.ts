@@ -33,6 +33,7 @@ const pkgInfo = `/**
 module.exports = defineConfig({
   base: "./",
   build: {
+    outDir: "lib",
     lib: {
       entry: path.resolve(__dirname, "src/editor/index.tsx"),
       name: getPackageNameCamelCase(),
@@ -41,7 +42,7 @@ module.exports = defineConfig({
     },
     rollupOptions: {
       external: ["react"],
-      output: { 
+      output: {
         assetFileNames: `${packageName}.[ext]`,
         globals: {
           react: "React",

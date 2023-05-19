@@ -4,7 +4,7 @@ const config = {
   entries: [
     {
       filePath: "./src/editor/index.tsx",
-      outFile: `./dist/${outFileName}.d.ts`,
+      outFile: `./lib/${outFileName}.d.ts`,
       noCheck: false,
     },
   ],

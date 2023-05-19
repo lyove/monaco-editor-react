@@ -9,13 +9,13 @@
   "homepage": "https://github.com/lyove/monaco-editor-react#readme",
   "author": "lyove",
   "files": [
-    "dist"
+    "lib"
   ],
-  "main": "./dist/editor.es.js",
+  "main": "./lib/editor.es.js",
   "exports": {
     ".": {
-      "import": "./dist/editor.es.js",
-      "require": "./dist/editor.umd.js"
+      "import": "./lib/editor.es.js",
+      "require": "./lib/editor.umd.js"
     }
   },
   "keywords": [
