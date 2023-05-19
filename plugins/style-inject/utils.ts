@@ -23,7 +23,7 @@ const defaultInjectCode: InjectCode = (cssCode, { styleId, useStrictCSP }) =>
     useStrictCSP
       ? `elementStyle.nonce = document.head.querySelector('meta[property=csp-nonce]')?.content;`
       : ""
-  }elementStyle.appendChild(document.createTextNode(${cssCode}));document.head.appendChild(elementStyle);}}catch(e){console.error('vite-plugin-css-injected-by-js', e);}`;
+  }elementStyle.appendChild(document.createTextNode(${cssCode}));document.head.appendChild(elementStyle);}}catch(e){console.error('vite-plugin-style-inject', e);}`;
 
 export async function buildCSSInjectionCode({
   cssToInject,
@@ -144,7 +144,7 @@ export function concatCssAndDeleteFromBundle(bundle: OutputBundle, cssAssets: st
     cssName: string,
   ): string {
     const cssSource = extractCss(bundle, cssName);
-    delete bundle[cssName];
+    // delete bundle[cssName];
 
     return previous + cssSource;
   },
@@ -202,13 +202,13 @@ export function getJsTargetBundleKeys(
     const jsTargetFileName = jsAssets[jsAssets.length - 1];
     if (jsAssets.length > 1) {
       warnLog(
-        `[vite-plugin-css-injected-by-js] has identified "${jsTargetFileName}" as one of the multiple output files marked as "entry" to put the CSS injection code.` +
+        `[vite-plugin-style-inject] has identified "${jsTargetFileName}" as one of the multiple output files marked as "entry" to put the CSS injection code.` +
           'However, if this is not the intended file to add the CSS injection code, you can use the "jsAssetsFilterFunction" parameter to specify the desired output file (read docs).',
       );
       if (process.env.VITE_CSS_INJECTED_BY_JS_DEBUG) {
         const jsAssetsStr = jsAssets.join(", ");
         debugLog(
-          `[vite-plugin-css-injected-by-js] identified js file targets: ${jsAssetsStr}. Selected "${jsTargetFileName}".\n`,
+          `[vite-plugin-style-inject] identified js file targets: ${jsAssetsStr}. Selected "${jsTargetFileName}".\n`,
         );
       }
     }
@@ -236,7 +236,7 @@ export async function relativeCssInjection(
   for (const [jsAssetName, cssAssets] of Object.entries(assetsWithCss)) {
     process.env.VITE_CSS_INJECTED_BY_JS_DEBUG &&
       debugLog(
-        `[vite-plugin-css-injected-by-js] Relative CSS: ${jsAssetName}: [ ${cssAssets.join(",")} ]`,
+        `[vite-plugin-style-inject] Relative CSS: ${jsAssetName}: [ ${cssAssets.join(",")} ]`,
       );
     const assetCss = concatCssAndDeleteFromBundle(bundle, cssAssets);
     const cssInjectionCode = assetCss.length > 0 ? (await buildCssCode(assetCss))?.code : "";
@@ -268,7 +268,7 @@ export async function globalCssInjection(
   }
 
   process.env.VITE_CSS_INJECTED_BY_JS_DEBUG &&
-    debugLog(`[vite-plugin-css-injected-by-js] Global CSS Assets: [${cssAssets.join(",")}]`);
+    debugLog(`[vite-plugin-style-inject] Global CSS Assets: [${cssAssets.join(",")}]`);
   const allCssCode = concatCssAndDeleteFromBundle(bundle, cssAssets);
   if (allCssCode.length > 0) {
     globalCssToInject = allCssCode;
@@ -279,7 +279,7 @@ export async function globalCssInjection(
   for (const jsTargetKey of jsTargetBundleKeys) {
     const jsAsset = bundle[jsTargetKey] as OutputChunk;
     process.env.VITE_CSS_INJECTED_BY_JS_DEBUG &&
-      debugLog(`[vite-plugin-css-injected-by-js] Global CSS inject: ${jsAsset.fileName}`);
+      debugLog(`[vite-plugin-style-inject] Global CSS inject: ${jsAsset.fileName}`);
     jsAsset.code = buildOutputChunkWithCssInjectionCode(
       jsAsset.code,
       globalCssInjectionCode ?? "",
