@@ -11,7 +11,7 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/editor.js",
+  "main": "./dist/editor.es.js",
   "exports": {
     ".": {
       "import": "./dist/editor.es.js",
