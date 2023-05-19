@@ -49,6 +49,7 @@ module.exports = defineConfig({
         },
       },
     },
+    cssCodeSplit: true,
     emptyOutDir: true,
     assetsDir: "assets",
   },
