@@ -141,18 +141,7 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
 
     // value
     if (this.editor && value !== prevProps.value) {
-      if (options.readOnly) {
-        this.editor.setValue(value);
-      } else {
-        this.editor.executeEdits("", [
-          {
-            range: this.editor.getModel()?.getFullModelRange() || initRange,
-            text: value,
-          },
-        ]);
-      }
-      // push an "undo stop" in the undo-redo stack.
-      this.editor.pushUndoStop();
+      this.editor.setValue(value);
     }
 
     // language
