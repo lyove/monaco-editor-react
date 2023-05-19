@@ -2,6 +2,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import banner from "vite-plugin-banner";
+import styleInject from "./plugins/style-inject";
 import pkg from "./package.json";
 
 const packageName = "editor";
@@ -51,7 +52,7 @@ module.exports = defineConfig({
     emptyOutDir: true,
     assetsDir: "assets",
   },
-  plugins: [react({}), banner(pkgInfo)],
+  plugins: [react({}), banner(pkgInfo), styleInject()],
   resolve: {
     alias: {
       "@/*": path.resolve(__dirname, "src"),
