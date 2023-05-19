@@ -8,8 +8,7 @@ import pkg from "./package.json";
 const packageName = "editor";
 
 const fileNames = {
-  es: `${packageName}.js`,
-  cjs: `${packageName}.cjs`,
+  es: `${packageName}.es.js`,
   iife: `${packageName}.iife.js`,
   umd: `${packageName}.umd.js`,
 };
@@ -37,7 +36,7 @@ module.exports = defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/editor/index.tsx"),
       name: getPackageNameCamelCase(),
-      formats: ["es", "cjs", "iife", "umd"],
+      formats: ["es", "iife", "umd"],
       fileName: (format) => fileNames[format],
     },
     rollupOptions: {
@@ -47,6 +46,7 @@ module.exports = defineConfig({
         globals: {
           react: "React",
         },
+        exports: "named",
       },
     },
     cssCodeSplit: true,
