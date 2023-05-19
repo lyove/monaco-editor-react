@@ -11,6 +11,7 @@ Monaco Code Editor for React, without need of configuration files or plugins
 ```javascript
 import React from "react";
 import MonacoEditor from "@lyove/monaco-editor-react";
+import "@lyove/monaco-editor-react/dist/editor.css";
 import examples from "./examples";
 
 export default class CodeEditor extends React.PureComponent {
@@ -39,6 +40,7 @@ export default class CodeEditor extends React.PureComponent {
 ```javascript
 import React from "react";
 import { DiffEditor } from "@lyove/monaco-editor-react";
+import "@lyove/monaco-editor-react/dist/editor.css";
 import { diffExamples } from "./example";
 
 export default class CodeDiffEditor extends React.PureComponent {
