@@ -7,9 +7,6 @@ Monaco Code Editor for React, without need of configuration files or plugins
 ## 💎 **Using**
 
 ### 📌 BaseEditor
-```html
-<link rel="stylesheet" href="https://unpkg.com/@lyove/monaco-editor-react@0.0.2/dist/editor.css">
-```
 
 ```javascript
 import React from "react";
@@ -39,10 +36,6 @@ export default class CodeEditor extends React.PureComponent {
 ```
 
 ### 📌 DiffEditor
-
-```html
-<link rel="stylesheet" href="https://unpkg.com/@lyove/monaco-editor-react@0.0.2/dist/editor.css">
-```
 
 ```javascript
 import React from "react";
