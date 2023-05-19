@@ -14,8 +14,8 @@
   "main": "./dist/editor.js",
   "exports": {
     ".": {
-      "import": "./dist/editor.js",
-      "require": "./dist/editor.cjs"
+      "import": "./dist/editor.es.js",
+      "require": "./dist/editor.umd.js"
     }
   },
   "keywords": [
