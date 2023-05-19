@@ -36,18 +36,17 @@ export default function cssInjectedByJsPlugin({
   return {
     apply: "build",
     enforce: "post",
-    name: "vite-plugin-css-injected-by-js",
+    name: "vite-plugin-style-inject",
     config(config, env) {
       if (env.command === "build") {
         if (!config.build) {
           config.build = {};
         }
-
         if (relativeCSSInjection == true) {
           if (config.build.cssCodeSplit == false) {
             config.build.cssCodeSplit = true;
             warnLog(
-              `[vite-plugin-css-injected-by-js] Override of 'build.cssCodeSplit' option to true, it must be true when 'relativeCSSInjection' is enabled.`,
+              `[vite-plugin-style-inject] Override of 'build.cssCodeSplit' option to true, it must be true when 'relativeCSSInjection' is enabled.`,
             );
           }
         }
@@ -94,7 +93,7 @@ export default function cssInjectedByJsPlugin({
           const unusedCssAssetsString = unusedCssAssets.join(",");
           unusedCssAssetsString.length > 0 &&
             warnLog(
-              `[vite-plugin-css-injected-by-js] Some CSS assets were not included in any known JS: ${unusedCssAssetsString}`,
+              `[vite-plugin-style-inject] Some CSS assets were not included in any known JS: ${unusedCssAssetsString}`,
             );
         }
       } else {
