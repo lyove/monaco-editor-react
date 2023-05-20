@@ -41,7 +41,7 @@ module.exports = defineConfig({
       fileName: (format) => fileNames[format],
     },
     rollupOptions: {
-      external: ["react"],
+      external: ["react", "react-dom"],
       output: {
         assetFileNames: `${packageName}.[ext]`,
         globals: {
