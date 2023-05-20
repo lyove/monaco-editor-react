@@ -46,6 +46,7 @@ module.exports = defineConfig({
         assetFileNames: `${packageName}.[ext]`,
         globals: {
           react: "React",
+          "react-dom": "ReactDOM",
         },
         exports: "named",
       },
