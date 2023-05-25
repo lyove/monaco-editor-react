@@ -123,9 +123,7 @@ class App extends React.PureComponent<BaseProps, BaseState> {
             onChange={(value: string | null) => {
               console.log("editor value:===========================\n", value);
             }}
-            // cdnConfig={{
-            //   monacoPath: "https://g.alicdn.com/code/lib/monaco-editor/0.36.1/min/vs",
-            // }}
+            // monacoPath="https://g.alicdn.com/code/lib/monaco-editor/0.36.1/min/vs"
           />
         </div>
 
