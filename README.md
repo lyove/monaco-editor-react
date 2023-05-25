@@ -11,8 +11,8 @@ Monaco Code Editor for React, without need of configuration files or plugins
 ```javascript
 import React from "react";
 import MonacoEditor from "@lyove/monaco-editor-react";
-
-const exampleCode = `console.log('Hello @lyove/monaco-editor-react');`
+import "@lyove/monaco-editor-react/lib/editor.css";
+import examples from "./examples";
 
 export default class CodeEditor extends React.PureComponent {
   render() {
@@ -21,7 +21,7 @@ export default class CodeEditor extends React.PureComponent {
         width={800}
         height={500}
         language="javascript"
-        value={exampleCode}
+        value={examples["javascript"]}
         onChange={(value) => {
           console.log("editor value: ", value);
         }}
@@ -40,9 +40,8 @@ export default class CodeEditor extends React.PureComponent {
 ```javascript
 import React from "react";
 import { DiffEditor } from "@lyove/monaco-editor-react";
-
-const originalCode = `console.log('Hello monaco-editor');`
-const modifiedCode = `console.log('Hello @lyove/monaco-editor-react');`
+import "@lyove/monaco-editor-react/lib/editor.css";
+import { diffExamples } from "./example";
 
 export default class CodeDiffEditor extends React.PureComponent {
   render() {
@@ -50,8 +49,8 @@ export default class CodeDiffEditor extends React.PureComponent {
       <DiffEditor
         width={600}
         height={400}
-        original={originalCode}
-        modified={modifiedCode}
+        original={diffExamples.original}
+        modified={diffExamples.modified}
         language="markdown"
       />
     );
@@ -75,7 +74,7 @@ export default class CodeDiffEditor extends React.PureComponent {
 | onChange | func | (value) => void | triggered when the editor value changes |
 | monacoWillMount | func | (monaco) => void | triggered when the monaco will mounted |
 | editorDidMount | func | (editor: MonacoEditor.editor, monaco: any) => void | triggered when the editor did mounted |
-| cdnConfig | { monacoPath: string } | { monacoPath: "https://unpkg.com/monaco-editor@0.38.0/min/vs" } | custom cdn path, notice: `monacoPath` such as: "`https://your-custom-cdn-path/monaco-editor@version/min/vs`", the end of the path can only be "`/monaco-editor@version/min/vs`", no need for "`/xxx.js`" |
+| monacoPath | string | "https://unpkg.com/monaco-editor@0.38.0/min/vs" | custom cdn path, notice: `monacoPath` such as: "`https://your-custom-cdn-path/monaco-editor@version/min/vs`", the end of the path can only be "`/monaco-editor@version/min/vs`", no need for "`/xxx.js`" |
 
 
 ### 🧩 DiffEditor Props
@@ -95,7 +94,7 @@ export default class CodeDiffEditor extends React.PureComponent {
 | monacoWillMount | func | (monaco) => void | triggered when the monaco will mounted |
 | editorDidMount | func | (original: MonacoEditor.editor.ITextModel, modified: MonacoEditor.editor.ITextModel, editor: MonacoEditor.editor, monaco: any) => void | triggered when the diff editor did mounted |
 | onChange | (value: string) => void | null | modified model content change |
-| cdnConfig | { monacoPath: string } | { monacoPath: "https://unpkg.com/monaco-editor@0.38.0/min/vs" } | custom cdn path, notice: `monacoPath` such as: "`https://your-custom-cdn-path/monaco-editor@version/min/vs`", the end of the path can only be "`/monaco-editor@version/min/vs`", no need for "`/xxx.js`" |
+| monacoPath |string | "https://unpkg.com/monaco-editor@0.38.0/min/vs" | custom cdn path, notice: `monacoPath` such as: "`https://your-custom-cdn-path/monaco-editor@version/min/vs`", the end of the path can only be "`/monaco-editor@version/min/vs`", no need for "`/xxx.js`" |
 
 ## 📋 License
 Licensed under the MIT License.
