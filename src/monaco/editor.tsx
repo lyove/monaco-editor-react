@@ -15,7 +15,6 @@ import {
   icons,
 } from "../config";
 import { isFunc, isNumber } from "../utils";
-import type { Config } from "./loader";
 import "../style/index.less";
 
 export interface EditorProps {
@@ -34,7 +33,7 @@ export interface EditorProps {
     monaco: any,
   ) => void;
   onChange?: (value: string | null) => void;
-  cdnConfig?: Config;
+  monacoPath?: string;
 }
 
 interface EditorState {
@@ -86,9 +85,10 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       monacoWillMount = () => {},
       editorDidMount = () => {},
       onChange = () => {},
-      cdnConfig,
+      monacoPath,
     } = this.props;
-    monacoLoader.init(cdnConfig).then((monaco) => {
+    const initCfg = monacoPath ? { monacoPath } : undefined;
+    monacoLoader.init(initCfg).then((monaco) => {
       this.monaco = monaco;
 
       // onWillMount
