@@ -11,24 +11,43 @@ Monaco Code Editor for React, without need of configuration files or plugins
 ```javascript
 import React from "react";
 import MonacoEditor from "@lyove/monaco-editor-react";
-import "@lyove/monaco-editor-react/lib/editor.css";
-import examples from "./examples";
+
+const exampleCode = `console.log('Hello @lyove/monaco-editor-react');`
 
 export default class CodeEditor extends React.PureComponent {
   render() {
     return (
       <MonacoEditor
-        width={800}
-        height={500}
+        width={1000}
+        height={400}
         language="javascript"
-        value={examples["javascript"]}
-        onChange={(value) => {
-          console.log("editor value: ", value);
+        value={exampleCode}
+        theme="vs"
+        supportFullScreen={true}
+        options={{
+          fontSize: 13,
+          fontFamily: 'Menlo, Monaco, "Courier New", monospace',
+          minimap: {
+            enabled: true,
+          },
+          automaticLayout: true,
+          formatOnPaste: true,
+          scrollbar: {
+            useShadows: false,
+            verticalScrollbarSize: 10,
+            horizontalScrollbarSize: 10,
+          },
+        }}
+        monacoWillMount={(monaco) => {
+          console.log("monaco：", monaco);
         }}
         editorDidMount={(editor, monaco) => {
-          console.log("editor instance: ", editor);
-          console.log("monaco: ", monaco);
+          console.log("editor：", editor);
         }}
+        onChange={(value: string | null) => {
+          console.log("editor value:\n", value);
+        }}
+        // monacoPath="https://cdn.jsdelivr.net/npm/monaco-editor@0.38.0/min/vs"
       />
     );
   }
@@ -40,8 +59,9 @@ export default class CodeEditor extends React.PureComponent {
 ```javascript
 import React from "react";
 import { DiffEditor } from "@lyove/monaco-editor-react";
-import "@lyove/monaco-editor-react/lib/editor.css";
-import { diffExamples } from "./example";
+
+const originalCode = `npm install monaco-editor`
+const modifiedCode = `npm install @lyove/monaco-editor-react`
 
 export default class CodeDiffEditor extends React.PureComponent {
   render() {
@@ -49,8 +69,8 @@ export default class CodeDiffEditor extends React.PureComponent {
       <DiffEditor
         width={600}
         height={400}
-        original={diffExamples.original}
-        modified={diffExamples.modified}
+        original={originalCode}
+        modified={modifiedCode}
         language="markdown"
       />
     );
