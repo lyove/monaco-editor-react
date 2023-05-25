@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-export interface Config {
+interface Config {
   /**
    * default: https://unpkg.com/monaco-editor@0.38.0/min/vs
    */
