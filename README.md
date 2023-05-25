@@ -50,8 +50,8 @@ export default class CodeDiffEditor extends React.PureComponent {
       <DiffEditor
         width={600}
         height={400}
-        original={diffExamples.original}
-        modified={diffExamples.modified}
+        original={originalCode}
+        modified={modifiedCode}
         language="markdown"
       />
     );
