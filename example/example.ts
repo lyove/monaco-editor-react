@@ -118,7 +118,6 @@ $ yarn add @lyove/monaco-editor-react
 
 import React from 'react';
 import examples from './examples'
-// component
 import MonacoEditor from '@lyove/monaco-editor-react'
 
 
@@ -177,7 +176,7 @@ yarn start
 | width | number | 100% | null | editor width |
 | height | number | 100% | null | editor height |
 | language | string | null | editor language |
-| theme | string | vs | vs, vs-dark, active4d, clouds, chrome, monokai, solarized-dark, solarized-light, [MonacoTheme](https://github.com/brijeshb42/monaco-themes) |
+| theme | string | vs | vs, vs-dark, active4d, clouds, chrome, monokai, solarized-dark, solarized-light |
 | options | object | null | [IEditorOptions](https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html) |
 | style | object | null | editor outer container style |
 | onChange | func | (value) => void | triggered when the editor value changes |
@@ -198,7 +197,7 @@ yarn start
 | language | string | null | diff editor language |
 | originalLanguage | string | null | diff editor original language |
 | modifiedLanguage | string | null | diff editor modified language |
-| theme | string | vs | vs, vs-dark, active4d, clouds, chrome, monokai, solarized-dark, solarized-light, [MonacoTheme](https://github.com/brijeshb42/monaco-themes) |
+| theme | string | vs | vs, vs-dark, active4d, clouds, chrome, monokai, solarized-dark, solarized-light |
 | options | object | null | [IDiffEditorOptions](https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.idiffeditorconstructionoptions.html) |
 | style | object | null | diff editor outer container style |
 | monacoWillMount | func | (monaco) => void | triggered when the monaco will mounted |
@@ -211,7 +210,7 @@ yarn start
 <!-- logo -->
 
 <!-- title -->
-<h1 align="center" style="text-align: center">react-monaco-diff-editor</h1>
+<h1 align="center" style="text-align: center">monaco-diff-editor-react</h1>
 <!-- title -->
 
 
@@ -272,7 +271,7 @@ export default Index
 
 git clone https://github.com/lyove/monaco-editor-react.git
 
-cd react-monaco-editor
+cd monaco-editor-react
 
 yarn install
 
