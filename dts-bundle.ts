@@ -6,7 +6,7 @@ const config = {
   },
   entries: [
     {
-      filePath: "./src/editor/index.tsx",
+      filePath: "./src/index.tsx",
       outFile: `./lib/${outFileName}.d.ts`,
       output: {
         noBanner: true,
