@@ -12,7 +12,6 @@ import {
   themes,
 } from "../config";
 import { isFunc } from "../utils";
-import type { Config } from "./loader";
 
 import "../style/index.less";
 
@@ -36,7 +35,7 @@ export interface DiffProps {
     monaco: any,
   ) => void;
   onChange?: (value: string) => void;
-  cdnConfig?: Config;
+  monacoPath?: string;
 }
 
 interface DiffState {
@@ -72,10 +71,11 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
       monacoWillMount = () => {},
       editorDidMount = () => {},
       onChange = () => {},
-      cdnConfig,
+      monacoPath,
     } = this.props;
 
-    monacoLoader.init(cdnConfig).then((monaco) => {
+    const initCfg = monacoPath ? { monacoPath } : undefined;
+    monacoLoader.init(initCfg).then((monaco) => {
       this.monaco = monaco;
 
       // onWillMount
