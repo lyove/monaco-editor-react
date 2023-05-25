@@ -41,13 +41,6 @@ interface EditorState {
   isFullScreen: boolean;
 }
 
-const initRange: MonacoEditor.IRange = {
-  startLineNumber: 0,
-  endLineNumber: 0,
-  startColumn: 0,
-  endColumn: 0,
-};
-
 const fullScreenWidth = window.innerWidth || document.documentElement.offsetWidth;
 const fullScreenHeight = window.innerHeight || document.documentElement.offsetHeight;
 
