@@ -11,8 +11,21 @@ Monaco Code Editor for React, without need of configuration files or plugins
 ```javascript
 import React from "react";
 import MonacoEditor from "@lyove/monaco-editor-react";
-import "@lyove/monaco-editor-react/lib/editor.css";
-import examples from "./examples";
+
+const exampleCode = `import React from "react";
+import ReactDOM from "react-dom";
+import App from "./main";
+import "./style.less";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <React.Suspense fallback="Loading">
+      <App />
+    </React.Suspense>
+  </React.StrictMode>,
+  document.getElementById("root"),
+);
+`
 
 export default class CodeEditor extends React.PureComponent {
   render() {
@@ -21,7 +34,7 @@ export default class CodeEditor extends React.PureComponent {
         width={800}
         height={500}
         language="javascript"
-        value={examples["javascript"]}
+        value={exampleCode}
         onChange={(value) => {
           console.log("editor value: ", value);
         }}
