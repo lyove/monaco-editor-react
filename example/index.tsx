@@ -1,5 +1,6 @@
 import React from "react";
-import MonacoEditor, { MonacoDiffEditor } from "../editor";
+import ReactDOM from "react-dom";
+import MonacoEditor, { MonacoDiffEditor } from "../src/index";
 import { languageOptions, themeOptons } from "./constant";
 import { examples, diffExamples } from "./example";
 import "./style.less";
@@ -15,7 +16,7 @@ interface BaseState {
   height: number;
 }
 
-export default class Demo extends React.PureComponent<BaseProps, BaseState> {
+class App extends React.PureComponent<BaseProps, BaseState> {
   constructor(props: BaseProps) {
     super(props);
     this.state = {
@@ -149,3 +150,12 @@ export default class Demo extends React.PureComponent<BaseProps, BaseState> {
     );
   }
 }
+
+ReactDOM.render(
+  <React.StrictMode>
+    <React.Suspense fallback="Loading">
+      <App />
+    </React.Suspense>
+  </React.StrictMode>,
+  document.getElementById("root"),
+);
