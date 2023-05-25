@@ -35,7 +35,7 @@ module.exports = defineConfig({
   build: {
     outDir: "lib",
     lib: {
-      entry: path.resolve(__dirname, "src/editor/index.tsx"),
+      entry: path.resolve(__dirname, "src/index.tsx"),
       name: getPackageNameCamelCase(),
       formats: ["es", "iife", "umd"],
       fileName: (format) => fileNames[format],
