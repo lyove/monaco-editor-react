@@ -2,7 +2,7 @@
 
 Monaco Code Editor for React, without need of configuration files or plugins
 
-<img src="https://camo.githubusercontent.com/9c766fb632fca7b8f42d163826fb8713d0507d34b7ad86f458cc8434c6d641c2/68747470733a2f2f7261776769742e636f6d2f6761627269656c62756c6c2f72656163742d6465736b746f702f6d61737465722f646f63732f7265736f75726365732f64656d6f2e737667" /> [https://monaco-editor-react.netlify.app](https://monaco-editor-react.netlify.app/)
+[https://monaco-editor-react.netlify.app](https://monaco-editor-react.netlify.app/)
 
 ## 💎 **Using**
 
