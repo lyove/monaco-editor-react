@@ -63,7 +63,9 @@ class App extends React.PureComponent<BaseProps, BaseState> {
         </nav>
 
         <div className="feature">
-          <h1>Monaco-Editor-React</h1>
+          <h1>
+            <span>Monaco-Editor-React</span>
+          </h1>
           <div className="desc">
             React component for MonacoEditor without needing to use webpack plugins
           </div>
