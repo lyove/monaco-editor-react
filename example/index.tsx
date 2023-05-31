@@ -52,7 +52,7 @@ class App extends React.PureComponent<BaseProps, BaseState> {
           <span className="nav-item">
             <a href="/">Home</a>
           </span>
-          <span>
+          <span className="nav-item">
             <a href="https://github.com/lyove/monaco-editor-react/blob/master/README.md">
               Documentation
             </a>
