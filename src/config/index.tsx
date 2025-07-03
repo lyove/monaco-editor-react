@@ -1,5 +1,5 @@
 // monaco cdn path
-export const monacoPath = "https://unpkg.com/monaco-editor@0.38.0/min/vs";
+export const monacoPath = "https://unpkg.com/monaco-editor@0.51.0/min/vs";
 
 // locale
 export const locale = navigator.language.toLowerCase().indexOf("zh") > -1 ? "zh-CN" : "en";

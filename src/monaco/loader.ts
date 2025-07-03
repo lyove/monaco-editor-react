@@ -9,7 +9,7 @@ declare global {
 
 interface Config {
   /**
-   * default: https://unpkg.com/monaco-editor@0.38.0/min/vs
+   * default: https://unpkg.com/monaco-editor@0.51.0/min/vs
    */
   monacoPath: string;
 }
