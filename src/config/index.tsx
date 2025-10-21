@@ -1,5 +1,8 @@
 // monaco cdn path
-export const monacoPath = "https://unpkg.com/monaco-editor@0.51.0/min/vs";
+// Ali Cdn https://g.alicdn.com/code/lib/monaco-editor/0.49.0/min/vs/editor/editor.main.js
+const unpkgCdnPath = "https://unpkg.com/monaco-editor@0.51.0/min/vs";
+const aliCdnPath = "https://g.alicdn.com/code/lib/monaco-editor/0.49.0/min/vs";
+export const monacoPath = "aliCdnPath;
 
 // locale
 export const locale = navigator.language.toLowerCase().indexOf("zh") > -1 ? "zh-CN" : "en";
