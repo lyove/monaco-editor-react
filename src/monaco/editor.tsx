@@ -166,8 +166,6 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
   }
 
   createEditor() {
-    const _this = this;
-
     if (!this.monaco || !this.container) {
       return;
     }
@@ -201,7 +199,7 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
 
     // theme
     Object.keys(themes).forEach((t) => {
-      _this.monaco.editor.defineTheme(t, themes[t]);
+      this.monaco.editor.defineTheme(t, themes[t]);
     });
     this.monaco.editor.setTheme(theme);
 

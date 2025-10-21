@@ -1,3 +1,5 @@
+import React from "react";
+
 // monaco cdn path
 // Ali Cdn https://g.alicdn.com/code/lib/monaco-editor/0.49.0/min/vs/editor/editor.main.js
 const unpkgCdnPath = "https://unpkg.com/monaco-editor@0.51.0/min/vs";
