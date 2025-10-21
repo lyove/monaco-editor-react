@@ -1,6 +1,6 @@
 {
   "name": "@lyove/monaco-editor-react",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "🌴 Monaco Code Editor for React, without need of configuration files or plugins",
   "repository": {
     "type": "git",
