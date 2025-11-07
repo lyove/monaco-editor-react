@@ -52,6 +52,7 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
   public monaco: any;
   public editor?: MonacoEditor.editor.IStandaloneCodeEditor;
   private originalLayout: { width: number; height: number };
+  private isSettingValue = false;
   static displayName = "MonacoEditor";
 
   constructor(props: EditorProps) {
@@ -100,7 +101,9 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
       // onChange
       this.editor?.onDidChangeModelContent(
         debounce(() => {
-          onChange(this.editor?.getValue() || null);
+          if (!this.isSettingValue && isFunc(onChange)) {
+            onChange(this.editor?.getValue() || null);
+          }
         }, 50),
       );
 
@@ -134,12 +137,26 @@ export default class Editor extends React.Component<EditorProps, EditorState> {
 
     // value
     if (this.editor && value !== prevProps.value) {
-      this.editor.setValue(value);
+      const currentValue = this.editor.getValue();
+      if (value !== currentValue) {
+        this.isSettingValue = true;
+        this.editor.setValue(value);
+        setTimeout(() => {
+          this.isSettingValue = false;
+        }, 0);
+      }
     }
 
     // language
     if (this.editor && language !== prevProps.language) {
-      this.editor.setValue(value);
+      const currentValue = this.editor.getValue();
+      if (value !== currentValue) {
+        this.isSettingValue = true;
+        this.editor.setValue(value);
+        setTimeout(() => {
+          this.isSettingValue = false;
+        }, 0);
+      }
       this.monaco.editor.setModelLanguage(this.editor.getModel(), language);
     }
 
