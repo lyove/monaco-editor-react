@@ -1,5 +1,5 @@
-import { monacoPath } from "../config";
-import { isObject } from "../utils";
+import { monacoPath } from '../config';
+import { isObject } from '../utils';
 
 declare global {
   interface Window {
@@ -9,7 +9,7 @@ declare global {
 
 interface Config {
   /**
-   * default: https://unpkg.com/monaco-editor@0.52.0/min/vs
+   * default: https://unpkg.com/monaco-editor@0.51.0/min/vs
    */
   monacoPath: string;
 }
@@ -50,12 +50,12 @@ class Monaco {
   }
 
   mainScriptLoad() {
-    document.removeEventListener("monacoInit", this.mainScriptLoad);
+    document.removeEventListener('monacoInit', this.mainScriptLoad);
     this.resolve(window.monaco);
   }
 
   createScript(src?: string) {
-    const script = document.createElement("script");
+    const script = document.createElement('script');
     if (src) {
       script.src = src;
     }
@@ -63,7 +63,9 @@ class Monaco {
   }
 
   createMonacoLoaderScript(mainScript: HTMLScriptElement) {
-    const loaderScript = this.createScript(`${this.config.monacoPath}/loader.js`);
+    const loaderScript = this.createScript(
+      `${this.config.monacoPath}/loader.js`,
+    );
     loaderScript.onload = () => this.injectScripts(mainScript);
     loaderScript.onerror = this.reject;
     return loaderScript;
@@ -92,7 +94,7 @@ class Monaco {
         return new Promise((res) => res(window.monaco));
       }
 
-      document.addEventListener("monacoInit", this.mainScriptLoad);
+      document.addEventListener('monacoInit', this.mainScriptLoad);
 
       const mainScript = this.createMainScript();
       const loaderScript = this.createMonacoLoaderScript(mainScript);

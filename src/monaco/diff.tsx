@@ -1,19 +1,20 @@
-import React from "react";
-import classNames from "classnames";
-import { debounce } from "lodash";
-import * as MonacoEditor from "monaco-editor";
-import monacoLoader from "./loader";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import classNames from 'classnames';
+import { debounce } from 'lodash';
+import * as MonacoEditor from 'monaco-editor';
+import React from 'react';
 import {
-  wrapperClassName,
   containerClassName,
   initHeight,
-  loadingText,
   initOptions,
+  loadingText,
   themes,
-} from "../config";
-import { isFunc } from "../utils";
+  wrapperClassName,
+} from '../config';
+import { isFunc } from '../utils';
+import monacoLoader from './loader';
 
-import "../style/index.less";
+import '../style.less';
 
 export interface DiffProps {
   width?: number;
@@ -49,7 +50,7 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
   public monaco: any;
   public editor: any;
   public container: HTMLDivElement | null;
-  static displayName = "MonacoDiffEditor";
+  static displayName = 'MonacoDiffEditor';
 
   constructor(props: DiffProps) {
     super(props);
@@ -176,7 +177,9 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
       return;
     }
 
-    const wrapper = document.querySelector(`.${wrapperClassName}`) as HTMLElement;
+    const wrapper = document.querySelector(
+      `.${wrapperClassName}`,
+    ) as HTMLElement;
 
     const {
       width = wrapper.offsetWidth,
@@ -198,8 +201,14 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
     });
 
     // model
-    const originalModel = this.monaco.editor.createModel(original, originalLanguage || language);
-    const modifiedModel = this.monaco.editor.createModel(modified, modifiedLanguage || language);
+    const originalModel = this.monaco.editor.createModel(
+      original,
+      originalLanguage || language,
+    );
+    const modifiedModel = this.monaco.editor.createModel(
+      modified,
+      modifiedLanguage || language,
+    );
     this.editor.setModel({
       original: originalModel,
       modified: modifiedModel,
@@ -225,14 +234,19 @@ export default class DiffEditor extends React.Component<DiffProps, DiffState> {
 
   render() {
     const { ready } = this.state;
-    const { width, height = initHeight, className, bordered = true } = this.props;
+    const {
+      width,
+      height = initHeight,
+      className,
+      bordered = true,
+    } = this.props;
 
-    const wrapperClass = classNames(wrapperClassName, "diff", className, {
-      "no-border": !bordered,
+    const wrapperClass = classNames(wrapperClassName, 'diff', className, {
+      'no-border': !bordered,
     });
 
     const style = {
-      ...(width && !isNaN(width) ? { width: `${width}px` } : { width: "100%" }),
+      ...(width && !isNaN(width) ? { width: `${width}px` } : { width: '100%' }),
       height: `${height}px`,
     };
 
