@@ -91,7 +91,7 @@ class Monaco {
 
     if (!this.isInitialized) {
       if (window.monaco && window.monaco.editor) {
-        return new Promise((res) => res(window.monaco));
+        return Promise.resolve(window.monaco);
       }
 
       document.addEventListener('monacoInit', this.mainScriptLoad);
