@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import MonacoEditor, { MonacoDiffEditor } from "../src/index";
 import { languageOptions, themeOptons } from "./constant";
 import { examples, diffExamples } from "./example";
-import "./style.less";
+import "./style/editor.less";
 
 export interface BaseProps {
   [key: string]: unknown;

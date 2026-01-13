@@ -12,7 +12,7 @@ import {
   wrapperClassName,
 } from '../config';
 import { isFunc, isNumber } from '../utils';
-import '../style.less';
+import '../style/editor.less';
 
 export interface EditorProps {
   width?: number;

@@ -14,7 +14,7 @@ import {
 import { isFunc } from '../utils';
 import monacoLoader from './loader';
 
-import '../style.less';
+import '../style/editor.less';
 
 export interface DiffProps {
   width?: number;
